@@ -7,5 +7,177 @@
 </head>
 
 <body>
+
+
+
+<div class="iphone">
+    <i class="iphone-receiver"></i>
+    <i class="iphone-camera"></i>
+    <i class="iphone-home"></i>
+    <i class="iphone-voice-up"></i>
+    <i class="iphone-voice-down"></i>
+    <i class="iphone-mute"></i>
+    <i class="iphone-power"></i>
+    <div class="iphone-screen">
+
+    </div>
+</div>
+
+<div class="page page-home">
+
+</div>
+
+<div class="page page-map">
+
+</div>
+
+<div class="page page-airmatter">
+    <section id="airmatter-home">
+        <h3>AirMatters</h3>
+        <p>An professional Air Quality tools.<br>
+    Providing real-time air quality index & allergy data & weather in <br>
+    4079 monitoring stations、3281 cities of 56 countries in the world, <br>
+    as well as protection recommendations and forecast.</p>
+    </section>
+</div>
+
+<div class="page page-service">
+    <section id="service-home">
+        <h3>Access to air-purifier<br>
+Remote control</h3>
+    </section>
+</div>
+
+<div class="page page-partner">
+
+</div>
+
+<div class="page page-us">
+
+</div>
+
+<script>
+var motionObjects = [];
+
+function MotionObject(options) {
+    this.el = options.el;
+    this.motion = options.motion;
+    console.log(options.motion)
+    motionObjects.push(this);
+}
+
+var pageHeight = document.body.clientHeight || document.documentElement.clientHeight;
+var pageWidth = window.screen.availWidth;
+window.onscroll = refreshView;
+
+
+function refreshView() {
+    var scrollTop = document.body.scrollTop;
+    var pageIndex = Math.floor(scrollTop / pageHeight);
+    var pageOffset = scrollTop - pageHeight * pageIndex;
+    var pageOffsetPercent = pageOffset / pageHeight;
+
+    for (var i = 0; i < motionObjects.length; i++) {
+        var motionObject = motionObjects[i];
+        var motionAction = motionObject.motion[pageIndex];
+
+        if (typeof motionAction === 'function') {
+            var styles = motionAction.call(motionObject, pageOffsetPercent);
+            for (var key in styles) {
+                motionObject.el.style[key] = styles[key];
+            }
+        }
+    }
+}
+
+
+
+new MotionObject({
+    el: document.querySelector('.iphone'),
+    motion: {
+        0: function (percent) {
+            return {
+                transform: 'translateX(' + ((pageWidth - 290) / 2) + 'px) translateY('
+                    + (pageHeight - 200 - 200 * percent) + 'px)',
+                opacity: Math.max(1 - percent * 4, 0),
+            };
+        },
+
+        1: function (percent) {
+            percent = percent > 0.5 ? (percent - 0.5) * 2 : 0;
+            return {
+                transform: 'translateX(' + ((pageWidth - 290) / 2) + 'px) translateY('
+                    + (pageHeight - percent * 400) + 'px)',
+                opacity: percent,
+            };
+        },
+
+        2: function (percent) {
+            return {
+                transform: 'translateX(' + ((pageWidth - 290) / 2) + 'px) translateY('
+                    + (pageHeight - 400) + 'px)',
+                opacity: 1,
+            };
+        },
+
+        3: function (percent) {
+            percent = percent < 0.5 ? percent * 2 : 1;
+            var start = pageHeight - 400;
+            return {
+                transform: 'translateX(' + ((pageWidth - 290) / 2) + 'px) translateY('
+                    + (start + percent * (-700 - start)) + 'px)',
+                opacity: 1 - percent,
+            };
+        }
+    }
+});
+
+new MotionObject({
+    el: document.getElementById('airmatter-home'),
+    motion: {
+        1: function (percent) {
+            percent = percent > 0.5 ? (percent - 0.5) * 2 : 0;
+            return {
+                transform: 'translateY(' + (200 - percent * 200) + 'px)',
+                opacity: percent,
+            };
+        },
+
+        2: function (percent) {
+            percent = percent < 0.5 ? percent * 2 : 1;
+            return {
+                transform: 'translateY(' + ( percent * -100) + 'px)',
+                opacity: 1 - percent,
+            };
+        }
+    }
+});
+
+
+new MotionObject({
+    el: document.getElementById('service-home'),
+    motion: {
+        2: function (percent) {
+            percent = percent > 0.5 ? (percent - 0.5) * 2 : 0;
+            return {
+                transform: 'translateY(' + (200 - percent * 200) + 'px)',
+                opacity: percent,
+            };
+        },
+
+        3: function (percent) {
+            percent = percent < 0.5 ? percent * 2 : 1;
+            return {
+                transform: 'translateY(' + ( percent * -200) + 'px)',
+                opacity: 1 - percent,
+            };
+        }
+    }
+});
+
+
+refreshView();
+
+</script>
 </body>
 </html>

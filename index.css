@@ -1,0 +1,131 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #272727;
+}
+
+html, body { height: 100%; }
+
+.page {
+    height: 100%;
+}
+
+.page h3 {
+    font-size: 50px;
+    text-align: center;
+    padding: 80px 100px 60px;
+    margin: 0;
+}
+
+.page p {
+    font-size: 30px;
+    text-align: center;
+    margin: 0 100px;
+}
+
+.page-home {
+    background: #006cc8;
+}
+
+.page-map {
+    background: #0f1d2d;
+}
+
+.page-airmatter {
+    background: #fff;
+}
+
+.page-airmatter h3 {
+    color: #0384D0;
+}
+
+.page-service {
+    background: #97daf8;
+}
+
+#airmatter-home {
+    opacity: 0;
+}
+
+#service-home {
+    opacity: 0;
+}
+
+.iphone {
+    width: 290px;
+    height: 606px;
+    border-radius: 28px;
+    border: 2px solid #79808E;
+    position: fixed;
+    background: #fff;
+}
+
+.iphone-receiver {
+    border: 1px solid #79808E;
+    width: 48px;
+    height: 6px;
+    border-radius: 4px;
+
+    position: absolute;
+    left: 120px;
+    top: 30px;
+}
+
+.iphone-camera {
+    width: 8px;
+    height: 8px;
+    border-radius: 5px;
+    border: 1px solid #79808E;
+
+    position: absolute;
+    left: 100px;
+    top: 29px;
+}
+
+.iphone-home {
+    width: 46px;
+    height: 46px;
+    border-radius: 24px;
+    border: 1px solid #79808E;
+    position: absolute;
+    bottom: 10px;
+    left: 121px;
+}
+
+.iphone-screen {
+    background: #2b3549;
+    width: 270px;
+    height: 460px;
+    margin: 66px 10px 0;
+}
+
+.iphone-power,
+.iphone-voice-up,
+.iphone-voice-down,
+.iphone-mute {
+    position: absolute;
+    background: #626D82;
+    width: 2px;
+    height: 50px;
+}
+
+.iphone-power {
+    top: 130px;
+    left: 292px;
+}
+
+.iphone-voice-up {
+    top: 145px;
+    right: 292px;
+}
+
+.iphone-voice-down {
+    top: 205px;
+    right: 292px;
+}
+
+.iphone-mute {
+    height: 25px;
+    top: 95px;
+    right: 292px;
+}
