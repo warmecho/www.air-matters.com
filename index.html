@@ -10,7 +10,7 @@
 
 
 
-<div class="iphone">
+<div class="iphone" id="iphone">
     <i class="iphone-receiver"></i>
     <i class="iphone-camera"></i>
     <i class="iphone-home"></i>
@@ -23,29 +23,58 @@
     </div>
 </div>
 
-<div class="page page-home">
-
-</div>
-
 <div class="page page-map">
 
 </div>
 
+<div class="page page-home">
+
+</div>
+
+
+
 <div class="page page-airmatter">
-    <section id="airmatter-home">
-        <h3>AirMatters</h3>
-        <p>An professional Air Quality tools.<br>
-    Providing real-time air quality index & allergy data & weather in <br>
-    4079 monitoring stations、3281 cities of 56 countries in the world, <br>
-    as well as protection recommendations and forecast.</p>
-    </section>
+    <main id="airmatter-main">
+        <section id="airmatter-info">
+            <div class="airmatter-info-form"><input type="text" placeholder="try to search your city"><button>GO</button></div>
+            <p>Lists the various factors<br>that influence the air quality of your city</p>
+        </section>
+        <section id="airmatter-home">
+            <h3>AirMatters</h3>
+            <p>An professional Air Quality tools.<br>
+        Providing real-time air quality index & allergy data & weather in <br>
+        4079 monitoring stations、3281 cities of 56 countries in the world, <br>
+        as well as protection recommendations and forecast.</p>
+        </section>
+        <section id="airmatter-replay">
+            <svg width="89px" height="89px" viewBox="320 0 89 89" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="btn-play">
+                <!-- Generator: Sketch 3.7.2 (28276) - http://www.bohemiancoding.com/sketch -->
+                <desc>Created with Sketch.</desc>
+                <defs></defs>
+                <g id="Group-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(320.000000, 0.000000)">
+                    <path d="M32.2666667,28.1111181 C32.2666667,27.5173626 32.5746667,26.9680959 33.0777333,26.6549626 C33.5825111,26.3435404 34.2122,26.3161626 34.7426444,26.5796737 L65.5426444,41.9796737 C66.1227111,42.2705626 66.4888889,42.862607 66.4888889,43.5111181 C66.4888889,44.1596293 66.1227111,44.7516737 65.5426444,45.0425626 L34.7426444,60.4425626 C34.5013778,60.5623404 34.2395778,60.6222293 33.9777778,60.6222293 C33.6646444,60.6222293 33.3532222,60.5366737 33.0777333,60.3672737 C32.5746667,60.0541404 32.2666667,59.5048737 32.2666667,58.9111181 L32.2666667,28.1111181 Z M44,88 C68.2605,88 88,68.2605 88,44 C88,19.7395 68.2605,0 44,0 C19.7395,0 0,19.7395 0,44 C0,68.2605 19.7395,88 44,88 L44,88 Z" id="Page-1" fill="#0384D0"></path>
+                </g>
+            </svg>
+            <p>Replay Past 48 Hours<br>See change process through real-time data</p>
+        </section>
+    </main>
 </div>
 
 <div class="page page-service">
-    <section id="service-home">
-        <h3>Access to air-purifier<br>
-Remote control</h3>
-    </section>
+    <main id="service-main">
+        <section id="service-purifier-access">
+            <h3>Access to air-detector<br>Check airquality indoor</h3>
+            <a class="service-link"><img src="img/round-right.svg">instructions</a>
+        </section>
+        <section id="service-home">
+            <h3>Access to air-purifier<br>Remote control</h3>
+            <a class="service-link"><img src="img/round-right.svg">instructions</a>
+        </section>
+        <section id="service-realtime-remind">
+            <h3>Real-time remind of pollution situation<br>As well as 6 kinds of protection measures</h3>
+            <a class="service-link"><img src="img/round-right.svg">See the standard</a>
+        </section>
+    </main>
 </div>
 
 <div class="page page-partner">
@@ -56,128 +85,22 @@ Remote control</h3>
 
 </div>
 
-<script>
-var motionObjects = [];
-
-function MotionObject(options) {
-    this.el = options.el;
-    this.motion = options.motion;
-    console.log(options.motion)
-    motionObjects.push(this);
-}
-
-var pageHeight = document.body.clientHeight || document.documentElement.clientHeight;
-var pageWidth = window.screen.availWidth;
-window.onscroll = refreshView;
-
-
-function refreshView() {
-    var scrollTop = document.body.scrollTop;
-    var pageIndex = Math.floor(scrollTop / pageHeight);
-    var pageOffset = scrollTop - pageHeight * pageIndex;
-    var pageOffsetPercent = pageOffset / pageHeight;
-
-    for (var i = 0; i < motionObjects.length; i++) {
-        var motionObject = motionObjects[i];
-        var motionAction = motionObject.motion[pageIndex];
-
-        if (typeof motionAction === 'function') {
-            var styles = motionAction.call(motionObject, pageOffsetPercent);
-            for (var key in styles) {
-                motionObject.el.style[key] = styles[key];
-            }
-        }
-    }
-}
-
-
-
-new MotionObject({
-    el: document.querySelector('.iphone'),
-    motion: {
-        0: function (percent) {
-            return {
-                transform: 'translateX(' + ((pageWidth - 290) / 2) + 'px) translateY('
-                    + (pageHeight - 200 - 200 * percent) + 'px)',
-                opacity: Math.max(1 - percent * 4, 0),
-            };
-        },
-
-        1: function (percent) {
-            percent = percent > 0.5 ? (percent - 0.5) * 2 : 0;
-            return {
-                transform: 'translateX(' + ((pageWidth - 290) / 2) + 'px) translateY('
-                    + (pageHeight - percent * 400) + 'px)',
-                opacity: percent,
-            };
-        },
-
-        2: function (percent) {
-            return {
-                transform: 'translateX(' + ((pageWidth - 290) / 2) + 'px) translateY('
-                    + (pageHeight - 400) + 'px)',
-                opacity: 1,
-            };
-        },
-
-        3: function (percent) {
-            percent = percent < 0.5 ? percent * 2 : 1;
-            var start = pageHeight - 400;
-            return {
-                transform: 'translateX(' + ((pageWidth - 290) / 2) + 'px) translateY('
-                    + (start + percent * (-700 - start)) + 'px)',
-                opacity: 1 - percent,
-            };
-        }
-    }
-});
-
-new MotionObject({
-    el: document.getElementById('airmatter-home'),
-    motion: {
-        1: function (percent) {
-            percent = percent > 0.5 ? (percent - 0.5) * 2 : 0;
-            return {
-                transform: 'translateY(' + (200 - percent * 200) + 'px)',
-                opacity: percent,
-            };
-        },
-
-        2: function (percent) {
-            percent = percent < 0.5 ? percent * 2 : 1;
-            return {
-                transform: 'translateY(' + ( percent * -100) + 'px)',
-                opacity: 1 - percent,
-            };
-        }
-    }
-});
-
-
-new MotionObject({
-    el: document.getElementById('service-home'),
-    motion: {
-        2: function (percent) {
-            percent = percent > 0.5 ? (percent - 0.5) * 2 : 0;
-            return {
-                transform: 'translateY(' + (200 - percent * 200) + 'px)',
-                opacity: percent,
-            };
-        },
-
-        3: function (percent) {
-            percent = percent < 0.5 ? percent * 2 : 1;
-            return {
-                transform: 'translateY(' + ( percent * -200) + 'px)',
-                opacity: 1 - percent,
-            };
-        }
-    }
-});
-
-
-refreshView();
-
+<script type="text/template" id="section-ctrl-btn">
+    <svg width="53px" height="81px" viewBox="0 0 53 81" version="1.1" class="section-prev">
+        <defs></defs>
+        <g stroke="none" stroke-width="1" fill="none">
+            <rect transform="translate(26, 25.5) rotate(-45) translate(-26, -25.5) " x="-1" y="18" width="56" height="15" rx="8"></rect>
+            <rect transform="translate(27, 55.5) scale(1, -1) rotate(-45) translate(-27, -55.5) " x="-1" y="48" width="56" height="15" rx="8"></rect>
+        </g>
+    </svg>
+    <svg width="53px" height="81px" viewBox="0 0 53 81" version="1.1" class="section-next">
+        <defs></defs>
+        <g stroke="none" stroke-width="1" fill="none">
+            <rect transform="translate(26, 25.5) rotate(-315) translate(-26, -25.5) " x="-1" y="18" width="56" height="15" rx="8"></rect>
+            <rect transform="translate(27, 55.5) scale(1, -1) rotate(-315) translate(-27, -55.5) " x="-1" y="48" width="56" height="15" rx="8"></rect>
+        </g>
+    </svg>
 </script>
+<script src="index.js"></script>
 </body>
 </html>

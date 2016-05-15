@@ -1,0 +1,21 @@
+
+<svg width="76px" height="76px" viewBox="682 304 76 76" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <polygon id="path-1" points="0 5 10 17 17 11 7 0"></polygon>
+        <path d="M13.009,5.229 C25.838,-6.926 26.384,-27.18 14.229,-40.009 C2.074,-52.839 -18.18,-53.385 -31.009,-41.23 C-43.838,-29.075 -44.384,-8.821 -32.229,4.008 C-20.074,16.838 0.18,17.385 13.009,5.229 L13.009,5.229" id="path-3"></path>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-4">
+            <feMorphology radius="6" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="0" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feMorphology radius="6" operator="erode" in="SourceAlpha" result="shadowInner"></feMorphology>
+            <feOffset dx="0" dy="0" in="shadowInner" result="shadowInner"></feOffset>
+            <feComposite in="shadowOffsetOuter1" in2="shadowInner" operator="out" result="shadowOffsetOuter1"></feComposite>
+            <feGaussianBlur stdDeviation="1" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Move-Table-Cell-Progress-Icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(682.000000, 304.000000)">
+        <path d="M38,12 C52.336,12 64,23.664 64,38 C64,52.336 52.336,64 38,64 C23.664,64 12,52.336 12,38 C12,23.664 23.664,12 38,12 L38,12 Z M38,0 C17.013,0 0,17.013 0,38 C0,58.987 17.013,76 38,76 C58.987,76 76,58.987 76,38 C76,17.013 58.987,0 38,0 L38,0 L38,0 Z" id="Move-Table-Cell-Progress-Ring" fill="#000000"></path>
+
+        <path d="M50.649,37.351 L39.649,26.351 C39.014,25.716 37.985,25.716 37.35,26.351 C36.716,26.986 36.716,28.015 37.35,28.65 L45.702,37.001 L27.5,37.001 C26.671,37.001 26,37.672 26,38.501 C26,39.33 26.671,40.001 27.5,40.001 L45.702,40.001 L37.35,48.352 C36.716,48.987 36.716,50.016 37.35,50.651 C37.667,50.968 38.083,51.127 38.499,51.127 C38.915,51.127 39.331,50.969 39.648,50.651 L50.648,39.651 C51.283,39.015 51.283,37.985 50.649,37.351 L50.649,37.351 Z" id="Move-Arrow-Icon" fill="#000000"></path>
+    </g>
+</svg>
