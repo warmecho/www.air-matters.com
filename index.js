@@ -19,33 +19,33 @@ var iphoneCtrl = {
 
                     return transformStyle({
                         translateX: (Page.width - 290) / 2,
-                        translateY: Page.height * 2 - 200 * percent,
+                        translateY: Math.round(Page.height * 2 - 200 * percent),
                         opacity: percent,
                     });
                 },
 
                 1: function (percent, index) {
                     var start = Page.height * 2 - 200;
-                    var end = Page.height * 3 - 300;
+                    var end = Page.height * 3 - 350;
                     return transformStyle({
                         translateX: (Page.width - 290) / 2,
-                        translateY: start + (end - start) * percent,
+                        translateY: Math.round(start + (end - start) * percent),
                         opacity: 1,
                     });
                 },
 
                 2: function (percent, index) {
-                    var end = Page.height * 4 - 400;
-                    var start = Page.height * 3 - 300;
+                    var end = Page.height * 4 - 350;
+                    var start = Page.height * 3 - 350;
                     return transformStyle({
                         translateX: (Page.width - 290) / 2,
-                        translateY: start + (end - start) * percent,
+                        translateY: Math.round(start + (end - start) * percent),
                         opacity: 1,
                     });
                 },
 
                 3: function (percent, index) {
-                    var start = Page.height*4 - 400;
+                    var start = Page.height*4 - 350;
                     return transformStyle({
                         translateX: (Page.width - 290) / 2,
                         translateY: start + percent * -700,
@@ -60,6 +60,9 @@ var iphoneCtrl = {
 
 var scrollCtrl = {
     items: [],
+    index: 0,
+    leaveListeners: {},
+    enterListeners: {},
 
     init: function () {
         scrollCtrl.refreshView();
@@ -76,6 +79,19 @@ var scrollCtrl = {
         var pageOffset = scrollTop - Page.height * pageIndex;
         var pageOffsetPercent = pageOffset / Page.height;
 
+        if (pageOffsetPercent > 0.7 && scrollCtrl.index === pageIndex) {
+            scrollCtrl.index = pageIndex + 1;
+            console.log(scrollCtrl.index)
+            scrollCtrl.fireLeave(pageIndex);
+            scrollCtrl.fireEnter(scrollCtrl.index);
+        }
+        else if (pageOffsetPercent < 0.3 && scrollCtrl.index > pageIndex) {
+            scrollCtrl.index = pageIndex;
+            console.log(scrollCtrl.index)
+            scrollCtrl.fireLeave(pageIndex + 1);
+            scrollCtrl.fireEnter(pageIndex);
+        }
+
         for (var i = 0; i < scrollCtrl.items.length; i++) {
             var item = scrollCtrl.items[i];
             var fn = item.fn[pageIndex];
@@ -85,12 +101,86 @@ var scrollCtrl = {
                 setStyles(item.el, styles);
             }
         }
+    },
+
+    gotoIndex: function (index) {
+
+    },
+
+    whenLeave: function (index, fn) {
+        var listeners = scrollCtrl.leaveListeners;
+        if (!listeners[index]) {
+            listeners[index] = [];
+        }
+
+        listeners[index].push(fn);
+    },
+
+    fireLeave: function (index) {
+        var listeners = scrollCtrl.leaveListeners[index];
+        if (listeners instanceof Array) {
+            for (var i = 0; i < listeners.length; i++) {
+                listeners[i].call(scrollCtrl);
+            }
+        }
+    },
+
+    whenEnter: function (index, fn) {
+        var listeners = scrollCtrl.enterListeners;
+        if (!listeners[index]) {
+            listeners[index] = [];
+        }
+
+        listeners[index].push(fn);
+    },
+
+    fireEnter: function (index) {
+        var listeners = scrollCtrl.enterListeners[index];
+        if (listeners instanceof Array) {
+            for (var i = 0; i < listeners.length; i++) {
+                listeners[i].call(scrollCtrl);
+            }
+        }
     }
 };
 
-function SectionView(main) {
+function animation(fn) {
+    var step = 0;
+    var steps = 50;
+    doStep();
+
+    function doStep() {
+        step ++;
+        if (step > steps) {
+            return;
+        }
+
+        var percent = step / steps;
+        fn(percent);
+
+        setTimeout(doStep, 4);
+    }
+}
+
+var transition = {
+    show: function (el) {
+        animation(function (percent) {
+            el.style.opacity = percent;
+        });
+    },
+
+    hide: function (el) {
+        animation(function (percent) {
+            el.style.opacity = 1 - percent;
+        });
+    }
+};
+
+
+function SectionView(main, pageIndex) {
     var sections = main.getElementsByTagName('section');
     this.sections = sections;
+
     this.len = sections.length;
     for (var i = 0; i < this.len; i++) {
         var section = sections[i];
@@ -104,6 +194,15 @@ function SectionView(main) {
     var ctrlEl = document.createElement('div');
     ctrlEl.className = 'section-ctrl'
     main.parentNode.appendChild(ctrlEl);
+
+    scrollCtrl.whenEnter(pageIndex, function () {
+        transition.show(ctrlEl);
+    });
+
+    scrollCtrl.whenLeave(pageIndex, function () {
+        transition.hide(ctrlEl);
+    });
+
     var ctrlHtmlEl = document.getElementById('section-ctrl-btn');
     ctrlEl.innerHTML = ctrlHtmlEl.textContent || ctrlHtmlEl.innerText;
 
@@ -121,18 +220,10 @@ SectionView.prototype.next = function () {
     var toEl = this.sections[to];
 
     if (to < this.len) {
-        var steps = 50;
-        var step = 0;
-
         this.currentIndex = to;
 
-        function stepFn() {
-            step ++;
-            if (step > steps) {
-                return;
-            }
-
-            var percent = Math.sqrt(step / steps);
+        animation(function (percent) {
+            percent = Math.sqrt(percent);
 
             var fromOpacity = 1 - percent;
             var fromX = -(Page.width * percent);
@@ -153,11 +244,7 @@ SectionView.prototype.next = function () {
                     opacity: toOpacity
                 })
             );
-
-            setTimeout(stepFn, 4);
-        }
-
-        stepFn();
+        });
     }
 };
 
@@ -168,18 +255,10 @@ SectionView.prototype.prev = function () {
     var toEl = this.sections[to];
 
     if (to >= 0) {
-        var steps = 50;
-        var step = 0;
-
         this.currentIndex = to;
 
-        function stepFn() {
-            step ++;
-            if (step > steps) {
-                return;
-            }
-
-            var percent = Math.sqrt(step / steps);
+        animation(function (percent) {
+            percent = Math.sqrt(percent);
 
             var fromOpacity = 1 - percent;
             var fromX = Page.width * percent;
@@ -200,11 +279,7 @@ SectionView.prototype.prev = function () {
                     opacity: toOpacity
                 })
             );
-
-            setTimeout(stepFn, 4);
-        }
-
-        stepFn();
+        });
     }
 };
 
@@ -265,8 +340,8 @@ scrollCtrl.add({
 
 iphoneCtrl.init();
 scrollCtrl.init();
-new SectionView(document.getElementById('airmatter-main'));
-new SectionView(document.getElementById('service-main'));
+new SectionView(document.getElementById('airmatter-main'), 2);
+new SectionView(document.getElementById('service-main'), 3);
 
 function setStyles(el, styles) {
     for (var key in styles) {

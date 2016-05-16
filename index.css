@@ -161,6 +161,10 @@ html, body { height: 100%; }
     right: 292px;
 }
 
+.iphone-content {
+    display: none;
+}
+
 .airmatter-info-form {
     margin: 100px auto 40px;
     padding: 2px 5px;
