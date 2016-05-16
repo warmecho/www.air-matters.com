@@ -66,6 +66,50 @@ var iphoneCtrl = {
     }
 };
 
+var mapCtrl = {
+    init: function () {
+        scrollCtrl.add({
+            el: document.getElementById('world-map-wrap'),
+            fn: {
+                0: function (percent, index) {
+                    return transformStyle({
+                        translateY: Math.round(Page.height * percent),
+                    });
+                },
+
+                1: function (percent, index) {
+                    return transformStyle({
+                        translateY: Math.round(Page.height),
+                        opacity: 1 - percent,
+                    });
+                }
+            }
+        });
+    }
+};
+
+var searchCtrl = {
+    init: function () {
+        scrollCtrl.add({
+            el: document.getElementById('search-wrap'),
+            fn: {
+                0: function (percent, index) {
+                    return transformStyle({
+                        translateY: 140 + Math.round(Page.height * percent),
+                    });
+                },
+
+                1: function (percent, index) {
+                    return transformStyle({
+                        translateY: 140 + Math.round(Page.height),
+                        opacity: 1 - percent,
+                    });
+                }
+            }
+        });
+    }
+};
+
 
 var scrollCtrl = {
     items: [],
@@ -424,6 +468,8 @@ setTimeout(function () {
     new SectionView(document.getElementById('airmatter-main'), 2);
     new SectionView(document.getElementById('service-main'), 3);
     iphoneCtrl.init();
+    mapCtrl.init();
+    searchCtrl.init();
     scrollCtrl.init();
 
     if (document.body.scrollTop <= 10) {

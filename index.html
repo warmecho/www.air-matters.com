@@ -8,8 +8,6 @@
 
 <body>
 
-
-
 <div class="iphone" id="iphone">
     <i class="iphone-receiver"></i>
     <i class="iphone-camera"></i>
@@ -22,13 +20,29 @@
     </div>
 </div>
 
-<div class="page page-map">
 
+<div id="world-map-wrap">
+    <h3>Global Air Quality Index<br>live data</h3>
+    <p>
+        <a>Beijing</a>
+        <a>NewYork</a>
+        <a>Tokyo</a>
+        <a>London</a>
+        <a>Newdelhi</a>
+    </p>
+    <div id="world-map"></div>
 </div>
 
-<div class="page page-home">
+<div id="search-wrap"><div id="search">
+    <input type="text" placeholder="enter a city"><button>Search</button>
+</div></div>
 
-</div>
+<div class="page page-map"></div>
+
+<div class="page page-home"></div>
+
+<div class="page"></div>
+
 
 
 
@@ -107,5 +121,40 @@
     </svg>
 </script>
 <script src="index.js"></script>
+<script src="dep/echarts.js"></script>
+<script src="dep/world.js"></script>
+<script>
+var worldMapChart = echarts.init(document.getElementById('world-map'));
+var mapStyle = {
+    normal: {
+        borderColor: '#404a59'
+    },
+    emphasis: {
+        shadowColor: 'rgba(0, 0, 0, 0.5)',
+        shadowBlur: 0,
+        // areaColor: '#eee',
+        borderWidth: 0
+    }
+};
+worldMapChart.setOption({
+    backgroundColor: '#0f1d2d',
+    animationDurationUpdate: 800,
+    series: [{
+        type: 'map',
+        map: 'world',
+        data: [],
+        label: {
+            normal: {
+                show: false,
+                formatter: '{c}'
+            },
+            emphasis: {
+                show: false
+            }
+        },
+        itemStyle: mapStyle
+    }]
+});
+</script>
 </body>
 </html>

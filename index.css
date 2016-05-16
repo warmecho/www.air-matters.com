@@ -6,10 +6,48 @@ body {
 
 html, body { height: 100%; }
 
+#search-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    transform: translateY(140px);
+    z-index: 8;
+}
+
+#search {
+    margin: 0 auto;
+    width: 500px;
+    height: 36px;
+    background: #ccc;
+    border-radius: 3px;
+}
+
+#search input {
+    float: left;
+    margin: 3px 0 0 5px;
+    width: 360px;
+    height: 30px;
+    background: #ccc;
+    color: #fff;
+    border: 0;
+}
+
+#search button {
+    float: right;
+    margin: 3px 3px 0 0;
+    width: 130px;
+    height: 30px;
+    text-align: center;
+    color: #014165;
+    background: #0177BA;
+    border-radius: 3px;
+    border: 0;
+}
+
 .page {
     height: 100%;
     min-height: 600px;
-    
 }
 
 .page main {
@@ -23,12 +61,17 @@ html, body { height: 100%; }
 }
 
 .page-home {
+    width: 100%;
     background: #006cc8;
+    position: absolute;
+    z-index: 6;
+    opacity: .9;
 }
 
 .page-map {
     background: #0f1d2d;
 }
+
 
 .page-airmatter {
     background: #fff;
@@ -80,6 +123,23 @@ html, body { height: 100%; }
 .page-service .section-prev rect,
 .page-service .section-next rect {
     fill: #fff;
+}
+
+#world-map-wrap {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    min-height: 600px;
+    top: 0;
+    left: 0;
+}
+
+#world-map {
+    position: absolute;
+    top: 210px;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 .iphone {
@@ -248,6 +308,23 @@ html, body { height: 100%; }
     line-height: 42px;
     text-align: center;
     margin: 60px auto 40px;
+}
+
+#world-map-wrap h3 {
+    margin: 40px auto 70px;
+    font-size: 40px;
+    color: #fff;
+    text-align: center;
+}
+
+#world-map-wrap p {
+    text-align: center;
+}
+
+#world-map-wrap p a {
+    font-size: 16px;
+    color: #fff;
+    margin: 0 20px;
 }
 
 .service-link {
