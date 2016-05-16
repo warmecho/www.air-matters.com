@@ -9,6 +9,7 @@ var Page = {
 
 var iphoneCtrl = {
     el: document.getElementById('iphone'),
+    screenEl: document.getElementById('iphone-screen'),
 
     init: function () {
         scrollCtrl.add({
@@ -54,6 +55,14 @@ var iphoneCtrl = {
                 }
             }
         });
+    },
+
+    cleanScreen: function () {
+        iphoneCtrl.screenEl.innerHTML = '';
+    },
+
+    addContent: function (el) {
+        iphoneCtrl.screenEl.appendChild(el);
     }
 };
 
@@ -65,29 +74,40 @@ var scrollCtrl = {
     enterListeners: {},
 
     init: function () {
-        scrollCtrl.refreshView();
-        window.onscroll = scrollCtrl.refreshView;
+        window.onscroll = function () {
+            scrollCtrl.refreshView()
+        };
     },
 
     add: function (item) {
         this.items.push(item);
     },
 
-    refreshView: function () {
+    refreshView: function (isInit) {
         var scrollTop = document.body.scrollTop;
         var pageIndex = Math.floor(scrollTop / Page.height);
         var pageOffset = scrollTop - Page.height * pageIndex;
         var pageOffsetPercent = pageOffset / Page.height;
 
-        if (pageOffsetPercent > 0.7 && scrollCtrl.index === pageIndex) {
+        if (isInit) {
+            var index = pageIndex;
+            if (pageOffsetPercent > 0.5) {
+                index++;
+            }
+
+            if (scrollCtrl.index !== index) {
+                scrollCtrl.fireLeave(scrollCtrl.index);
+                scrollCtrl.index = index;
+                scrollCtrl.fireEnter(scrollCtrl.index);
+            }
+        }
+        else if (pageOffsetPercent > 0.7 && scrollCtrl.index === pageIndex) {
             scrollCtrl.index = pageIndex + 1;
-            console.log(scrollCtrl.index)
             scrollCtrl.fireLeave(pageIndex);
             scrollCtrl.fireEnter(scrollCtrl.index);
         }
         else if (pageOffsetPercent < 0.3 && scrollCtrl.index > pageIndex) {
             scrollCtrl.index = pageIndex;
-            console.log(scrollCtrl.index)
             scrollCtrl.fireLeave(pageIndex + 1);
             scrollCtrl.fireEnter(pageIndex);
         }
@@ -101,10 +121,6 @@ var scrollCtrl = {
                 setStyles(item.el, styles);
             }
         }
-    },
-
-    gotoIndex: function (index) {
-
     },
 
     whenLeave: function (index, fn) {
@@ -180,6 +196,7 @@ var transition = {
 function SectionView(main, pageIndex) {
     var sections = main.getElementsByTagName('section');
     this.sections = sections;
+    this.iphoneSections = [];
 
     this.len = sections.length;
     for (var i = 0; i < this.len; i++) {
@@ -189,17 +206,40 @@ function SectionView(main, pageIndex) {
             this.currentIndex = i;
             section.style.opacity = 1;
         }
+
+        var iphoneSection = null;
+        each(
+            section.getElementsByTagName('div'),
+            function (div) {
+                if (div.className === 'iphone-content') {
+                    iphoneSection = div;
+                }
+            }
+        );
+        this.iphoneSections.push(iphoneSection);
     }
 
     var ctrlEl = document.createElement('div');
     ctrlEl.className = 'section-ctrl'
     main.parentNode.appendChild(ctrlEl);
 
+    var iphoneSections = this.iphoneSections;
+    var me = this;
     scrollCtrl.whenEnter(pageIndex, function () {
+        me.currentIphoneSections = [];
+
+        each(iphoneSections, function (iphoneSection) {
+            var el = iphoneSection.cloneNode(true);
+            el.style.display = 'block';
+            me.currentIphoneSections.push(el);
+            iphoneCtrl.addContent(el);
+        });
+        transition.show(me.currentIphoneSections[me.currentIndex]);
         transition.show(ctrlEl);
     });
 
     scrollCtrl.whenLeave(pageIndex, function () {
+        iphoneCtrl.cleanScreen();
         transition.hide(ctrlEl);
     });
 
@@ -220,7 +260,9 @@ SectionView.prototype.next = function () {
     var toEl = this.sections[to];
 
     if (to < this.len) {
+        transition.hide(this.currentIphoneSections[from]);
         this.currentIndex = to;
+        transition.show(this.currentIphoneSections[to]);
 
         animation(function (percent) {
             percent = Math.sqrt(percent);
@@ -255,7 +297,9 @@ SectionView.prototype.prev = function () {
     var toEl = this.sections[to];
 
     if (to >= 0) {
+        transition.hide(this.currentIphoneSections[from]);
         this.currentIndex = to;
+        transition.show(this.currentIphoneSections[to]);
 
         animation(function (percent) {
             percent = Math.sqrt(percent);
@@ -338,10 +382,7 @@ scrollCtrl.add({
     }
 });
 
-iphoneCtrl.init();
-scrollCtrl.init();
-new SectionView(document.getElementById('airmatter-main'), 2);
-new SectionView(document.getElementById('service-main'), 3);
+
 
 function setStyles(el, styles) {
     for (var key in styles) {
@@ -370,3 +411,25 @@ function transformStyle(style) {
 
     return result;
 }
+
+function each(array, iterator) {
+    if (array && array.length > 0) {
+        for (var i = 0, l = array.length; i < l; i++) {
+            iterator.call(array, array[i], i);
+        }
+    }
+}
+
+setTimeout(function () {
+    new SectionView(document.getElementById('airmatter-main'), 2);
+    new SectionView(document.getElementById('service-main'), 3);
+    iphoneCtrl.init();
+    scrollCtrl.init();
+
+    if (document.body.scrollTop <= 10) {
+        document.body.scrollTop = Page.height;
+    }
+    iphoneCtrl.el.style.opacity = 1;
+    scrollCtrl.refreshView(true);
+}, 0);
+

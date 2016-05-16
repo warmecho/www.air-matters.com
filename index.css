@@ -53,6 +53,7 @@ html, body { height: 100%; }
     position: relative;
     z-index: 10;
     top: 550px;
+    opacity: 0;
 }
 
 .section-ctrl .section-prev {
@@ -89,6 +90,7 @@ html, body { height: 100%; }
     position: absolute;
     background: #fff;
     z-index: 99;
+    opacity: 0;
 }
 
 .iphone-receiver {
@@ -128,6 +130,8 @@ html, body { height: 100%; }
     width: 270px;
     height: 460px;
     margin: 66px 10px 0;
+    overflow: hidden;
+    position: relative;
 }
 
 .iphone-power,
@@ -163,6 +167,12 @@ html, body { height: 100%; }
 
 .iphone-content {
     display: none;
+    opacity: 0;
+    width: 270px;
+    height: 460px;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .airmatter-info-form {
