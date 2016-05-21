@@ -26,6 +26,7 @@ var iphoneCtrl = {
                 },
 
                 1: function (percent, index) {
+                    percent = percent <= 0.5 ? 0 : (percent - 0.5) * 2
                     var start = Page.height * 2 - 330;
                     var end = Page.height * 3 - 420;
                     return transformStyle({
