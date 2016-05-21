@@ -297,6 +297,11 @@ function SectionView(main, pageIndex) {
     btns[1].onclick = nextSection(this);
 }
 
+SectionView.prototype.updateBtnState = function () {
+    this.prevBtn.style.display = this.currentIndex <= 0 ? 'none' : '';
+    this.nextBtn.style.display = this.currentIndex >= this.len - 1 ? 'none' : '';
+};
+
 SectionView.prototype.next = function () {
     var from = this.currentIndex;
     var to = from + 1;
@@ -307,6 +312,7 @@ SectionView.prototype.next = function () {
         transition.hide(this.currentIphoneSections[from]);
         this.currentIndex = to;
         transition.show(this.currentIphoneSections[to]);
+        this.updateBtnState();
 
         animation(function (percent) {
             percent = Math.sqrt(percent);
@@ -344,6 +350,7 @@ SectionView.prototype.prev = function () {
         transition.hide(this.currentIphoneSections[from]);
         this.currentIndex = to;
         transition.show(this.currentIphoneSections[to]);
+        this.updateBtnState();
 
         animation(function (percent) {
             percent = Math.sqrt(percent);
