@@ -17,14 +17,15 @@
     <i class="iphone-mute"></i>
     <i class="iphone-power"></i>
     <div class="iphone-screen" id="iphone-screen">
+    <img src="img/iphone-content-1.png">
     </div>
 </div>
 
 
 <div id="world-map-wrap">
-    <h3>Global Air Quality Index<br>live data</h3>
+    <h3>Global AirQuality Index<br>live data</h3>
     <p>
-        <a>Beijing</a>
+        <a>BeiJing</a>
         <a>NewYork</a>
         <a>Tokyo</a>
         <a>London</a>
@@ -55,19 +56,19 @@
         </section>
         <section id="airmatter-home">
             <h3>AirMatters</h3>
-            <p>An professional Air Quality tools.<br>
-        Providing real-time air quality index & allergy data & weather in <br>
+            <p>An professional Air Quality tools.
+        Providing real-time air quality index & allergy data & weather in 
         4079 monitoring stations、3281 cities of 56 countries in the world, <br>
         as well as protection recommendations and forecast.</p>
             <div class="iphone-content"><img src="img/iphone-content-3.png"></div>
         </section>
         <section id="airmatter-replay">
-            <svg width="89px" height="89px" viewBox="320 0 89 89" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="btn-play">
+            <svg width="67px" height="67px" viewBox="320 0 67 67" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="btn-play">
                 <!-- Generator: Sketch 3.7.2 (28276) - http://www.bohemiancoding.com/sketch -->
                 <desc>Created with Sketch.</desc>
                 <defs></defs>
                 <g id="Group-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(320.000000, 0.000000)">
-                    <path d="M32.2666667,28.1111181 C32.2666667,27.5173626 32.5746667,26.9680959 33.0777333,26.6549626 C33.5825111,26.3435404 34.2122,26.3161626 34.7426444,26.5796737 L65.5426444,41.9796737 C66.1227111,42.2705626 66.4888889,42.862607 66.4888889,43.5111181 C66.4888889,44.1596293 66.1227111,44.7516737 65.5426444,45.0425626 L34.7426444,60.4425626 C34.5013778,60.5623404 34.2395778,60.6222293 33.9777778,60.6222293 C33.6646444,60.6222293 33.3532222,60.5366737 33.0777333,60.3672737 C32.5746667,60.0541404 32.2666667,59.5048737 32.2666667,58.9111181 L32.2666667,28.1111181 Z M44,88 C68.2605,88 88,68.2605 88,44 C88,19.7395 68.2605,0 44,0 C19.7395,0 0,19.7395 0,44 C0,68.2605 19.7395,88 44,88 L44,88 Z" id="Page-1" fill="#0384D0"></path>
+                    <path d="M24.2,21.0833386 C24.2,20.6380219 24.431,20.2260719 24.8083,19.9912219 C25.1868833,19.7576553 25.65915,19.7371219 26.0569833,19.9347553 L49.1569833,31.4847553 C49.5920333,31.7029219 49.8666667,32.1469553 49.8666667,32.6333386 C49.8666667,33.1197219 49.5920333,33.5637553 49.1569833,33.7819219 L26.0569833,45.3319219 C25.8760333,45.4217553 25.6796833,45.4666719 25.4833333,45.4666719 C25.2484833,45.4666719 25.0149167,45.4025053 24.8083,45.2754553 C24.431,45.0406053 24.2,44.6286553 24.2,44.1833386 L24.2,21.0833386 Z M33,66 C51.195375,66 66,51.195375 66,33 C66,14.804625 51.195375,0 33,0 C14.804625,0 0,14.804625 0,33 C0,51.195375 14.804625,66 33,66 L33,66 Z" id="Page-1" fill="#0384D0"></path>
                 </g>
             </svg>
             <p>Replay Past 48 Hours<br>See change process through real-time data</p>
@@ -140,6 +141,10 @@ worldMapChart.setOption({
     backgroundColor: '#0f1d2d',
     animationDurationUpdate: 800,
     series: [{
+        x: 80,
+        y: 50,
+        x2: 80,
+        y2: 50,
         type: 'map',
         map: 'world',
         data: [],

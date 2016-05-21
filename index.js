@@ -20,14 +20,14 @@ var iphoneCtrl = {
 
                     return transformStyle({
                         translateX: (Page.width - 290) / 2,
-                        translateY: Math.round(Page.height * 2 - 200 * percent),
+                        translateY: Math.round(Page.height * 2 - 330 * percent),
                         opacity: percent,
                     });
                 },
 
                 1: function (percent, index) {
-                    var start = Page.height * 2 - 200;
-                    var end = Page.height * 3 - 350;
+                    var start = Page.height * 2 - 330;
+                    var end = Page.height * 3 - 420;
                     return transformStyle({
                         translateX: (Page.width - 290) / 2,
                         translateY: Math.round(start + (end - start) * percent),
@@ -36,8 +36,8 @@ var iphoneCtrl = {
                 },
 
                 2: function (percent, index) {
-                    var end = Page.height * 4 - 350;
-                    var start = Page.height * 3 - 350;
+                    var end = Page.height * 4 - 420;
+                    var start = Page.height * 3 - 420;
                     return transformStyle({
                         translateX: (Page.width - 290) / 2,
                         translateY: Math.round(start + (end - start) * percent),
@@ -46,7 +46,7 @@ var iphoneCtrl = {
                 },
 
                 3: function (percent, index) {
-                    var start = Page.height*4 - 350;
+                    var start = Page.height*4 - 420;
                     return transformStyle({
                         translateX: (Page.width - 290) / 2,
                         translateY: start + percent * -700,
