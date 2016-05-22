@@ -12,6 +12,7 @@ calcPageSize();
 var iphoneCtrl = {
     el: document.getElementById('iphone'),
     screenEl: document.getElementById('iphone-screen'),
+    mainEl: document.getElementById('iphone-content-main'),
 
     init: function () {
         scrollCtrl.add({
@@ -65,9 +66,19 @@ var iphoneCtrl = {
                 }
             }
         });
+
+        scrollCtrl.whenEnter('*', function () {
+            if (!iphoneCtrl.screenEl.firstChild) {
+                iphoneCtrl.addContent(iphoneCtrl.mainEl);
+                transition.show(iphoneCtrl.mainEl);
+            }
+        });
     },
 
     cleanScreen: function () {
+        if (iphoneCtrl.mainEl.parentNode === iphoneCtrl.screenEl) {
+            iphoneCtrl.screenEl.removeChild(iphoneCtrl.mainEl);
+        }
         iphoneCtrl.screenEl.innerHTML = '';
     },
 
@@ -248,12 +259,8 @@ var scrollCtrl = {
     },
 
     fireLeave: function (index) {
-        var listeners = scrollCtrl.leaveListeners[index];
-        if (listeners instanceof Array) {
-            for (var i = 0; i < listeners.length; i++) {
-                listeners[i].call(scrollCtrl);
-            }
-        }
+        scrollCtrl.processEnterEvent(scrollCtrl.leaveListeners, index);
+        scrollCtrl.processEnterEvent(scrollCtrl.leaveListeners, '*');
     },
 
     whenEnter: function (index, fn) {
@@ -266,7 +273,12 @@ var scrollCtrl = {
     },
 
     fireEnter: function (index) {
-        var listeners = scrollCtrl.enterListeners[index];
+        scrollCtrl.processEnterEvent(scrollCtrl.enterListeners, index);
+        scrollCtrl.processEnterEvent(scrollCtrl.enterListeners, '*');
+    },
+
+    processEnterEvent: function (listenerContainer, key) {
+        var listeners = listenerContainer[key];
         if (listeners instanceof Array) {
             for (var i = 0; i < listeners.length; i++) {
                 listeners[i].call(scrollCtrl);
@@ -392,7 +404,7 @@ SectionView.prototype.next = function () {
             var fromX = -(Page.width * percent);
             var toOpacity = percent;
             var toX = Page.width - (Page.width * percent);
-            
+
             setStyles(
                 fromEl,
                 transformStyle({
@@ -430,7 +442,7 @@ SectionView.prototype.prev = function () {
             var fromX = Page.width * percent;
             var toOpacity = percent;
             var toX = -Page.width + (Page.width * percent);
-            
+
             setStyles(
                 fromEl,
                 transformStyle({
@@ -522,7 +534,7 @@ function transformStyle(style) {
             case 'translateY':
                 transformStr.push(key + '(' + style[key] + 'px)');
                 break;
-            default: 
+            default:
                 result[key] = style[key];
         }
     }
@@ -543,7 +555,6 @@ function each(array, iterator) {
 }
 
 setTimeout(function () {
-    new SectionView(document.getElementById('airmatter-main'), 2);
     new SectionView(document.getElementById('service-main'), 3);
     iphoneCtrl.init();
     mapCtrl.init();

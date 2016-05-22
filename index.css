@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     background: #272727;
-    font-family: "Myriad Set Pro", 'PingFang SC', 'Helvetica Neue', 
+    font-family: "Myriad Set Pro", 'PingFang SC', 'Helvetica Neue',
         'Helvetica', 'STHeitiTC-Light', 'Arial', sans-serif;
     font-weight: 300;
 }
@@ -12,12 +12,19 @@ h3 {
     font-weight: 300;
 }
 
+ul, li, ol, dl, dt, dd {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
 nav {
     position: fixed;
     top: 60px;
     left: 60px;
     z-index: 99;
 }
+
 #nav-enter {
     width: 40px;
     height: 30px;
@@ -69,12 +76,12 @@ nav {
 
 .nav-active #nav-enter .nav-enter-2 {
     transform: rotate(-30deg) scale(0.6, 1) translate(-5px, 0);
-    
+
 }
 
 .nav-active #nav-enter .nav-enter-3 {
     transform: rotate(-30deg) scale(0.3, 1) translate(-7px, 0);
-    
+
 }
 
 
@@ -160,6 +167,40 @@ nav {
 #way-point .way-point-active {
     background: #A8DBF8;
     transform: scale(1.5, 1.5);
+}
+
+.app-head {
+    background: #2d3544;
+    height: 40px;
+    border-bottom: 1px solid #232b37;
+    position: relative;
+    text-align: center;
+    color: #fff;
+}
+
+.app-head span {
+    line-height: 40px;
+}
+
+.app-back {
+    position: absolute;
+    top: 0;
+    left: 5px;
+    color: #5b94de;
+}
+
+.app-front {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    color: #5b94de;
+}
+
+.app-number {
+    text-align: center;
+    font-size: 30px;
+    color: #fff;
+    margin-top: 60px;
 }
 
 .page {
@@ -305,6 +346,12 @@ nav {
     position: relative;
 }
 
+#iphone-content-main {
+    width: 270px;
+    height: 460px;
+    background: linear-gradient(#283242, #4f6c9c);
+}
+
 .iphone-power,
 .iphone-voice-up,
 .iphone-voice-down,
@@ -402,17 +449,36 @@ nav {
     color: #2292D5;
 }
 
-#airmatter-home p {
+#airmatter-main p {
     font-size: 22px;
     line-height: 30px;
     width: 850px;
     margin: 0 auto;
 }
 
-#airmatter-home h3 {
+#airmatter-main h3 {
     font-size: 46px;
     text-align: center;
-    margin: 35px 100px 15px;
+    padding: 35px 0 15px;
+    margin: 0 100px;
+}
+
+#airmatter-main ul {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#airmatter-main li {
+    display: inline;
+    margin: 0 10px;
+}
+
+#airmatter-main li a:link,
+#airmatter-main li a:visited {
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 30px;
+    color: #2292D5;
 }
 
 #airmatter-replay .btn-play {
