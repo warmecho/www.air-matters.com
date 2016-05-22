@@ -12,6 +12,91 @@ h3 {
     font-weight: 300;
 }
 
+nav {
+    position: fixed;
+    top: 60px;
+    left: 60px;
+    z-index: 99;
+}
+#nav-enter {
+    width: 40px;
+    height: 30px;
+    border-radius: 20px;
+    padding-top: 10px;
+    cursor: pointer;
+}
+
+#nav-list {
+    display: none;
+}
+
+.nav-active #nav-list {
+    display: block;
+}
+
+#nav-enter i {
+    display: block;
+    width: 22px;
+    height: 4px;
+    border-radius: 2px;
+    background: #A8DBF8;
+    margin: 2px auto 0;
+     -moz-transition: transform 0.3s ease-out;
+    -webkit-transition: transform 0.3s ease-out;
+    -o-transition: transform 0.3s ease-out;
+    transition: transform 0.3s ease-out;
+}
+
+#nav-enter:hover {
+    background: #A8DBF8;
+}
+
+#nav-enter:hover i {
+    background: #fff;
+}
+
+.nav-active #nav-enter {
+    background: #4D4D4D;
+}
+
+.nav-active #nav-enter i {
+    background: #0F1D2D
+}
+
+.nav-active #nav-enter .nav-enter-1 {
+    transform: rotate(-30deg) translate(-3px, 0);
+}
+
+.nav-active #nav-enter .nav-enter-2 {
+    transform: rotate(-30deg) scale(0.6, 1) translate(-5px, 0);
+    
+}
+
+.nav-active #nav-enter .nav-enter-3 {
+    transform: rotate(-30deg) scale(0.3, 1) translate(-7px, 0);
+    
+}
+
+
+
+#nav-list {
+    padding-left: 19px;
+}
+
+#nav-list a {
+    display: block;
+    border-left: 2px solid #4D4D4D;
+    padding-left: 10px;
+    font-size: 16px;
+    line-height: 22px;
+}
+
+#nav-list a:link,
+#nav-list a:visited {
+    color: #4D4D4D;
+    text-decoration: none;
+}
+
 #search-wrap {
     position: absolute;
     top: 0;
@@ -54,7 +139,7 @@ h3 {
 
 .page {
     height: 100%;
-    min-height: 600px;
+    min-height: 640px;
 }
 
 .page main {
@@ -72,7 +157,7 @@ h3 {
     background: #006cc8;
     position: absolute;
     z-index: 6;
-    opacity: .9;
+    opacity: .95;
 }
 
 .page-map {
@@ -191,7 +276,7 @@ h3 {
     width: 270px;
     height: 460px;
     margin: 66px 10px 0;
-    overflow: hidden;
+    overflow: scroll;
     position: relative;
 }
 

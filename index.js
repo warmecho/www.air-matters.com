@@ -1,10 +1,12 @@
 
 
-var Page = {
-    width: document.body.clientWidth || document.documentElement.clientWidth,
-    height: document.body.clientHeight || document.documentElement.clientHeight
-};
+var Page = {}
+function calcPageSize() {
+    Page.width = document.body.clientWidth || document.documentElement.clientWidth;
+    Page.height = Math.max(640, document.body.clientHeight || document.documentElement.clientHeight);
+}
 
+calcPageSize();
 
 
 var iphoneCtrl = {
@@ -16,17 +18,18 @@ var iphoneCtrl = {
             el: this.el,
             fn: {
                 0: function (percent, index) {
-                    percent = percent > 0.5 ? (percent - 0.5) * 2 : 0;
+                    // percent = percent > 0.5 ? (percent - 0.5) * 2 : 0;
+                    var start = Page.height;
+                    var end = Page.height * 2 - 330;
 
                     return transformStyle({
                         translateX: (Page.width - 290) / 2,
-                        translateY: Math.round(Page.height * 2 - 330 * percent),
+                        translateY: Math.round(start + (end - start) * percent),
                         opacity: percent,
                     });
                 },
 
                 1: function (percent, index) {
-                    percent = percent <= 0.5 ? 0 : (percent - 0.5) * 2
                     var start = Page.height * 2 - 330;
                     var end = Page.height * 3 - 420;
                     return transformStyle({
@@ -47,10 +50,16 @@ var iphoneCtrl = {
                 },
 
                 3: function (percent, index) {
+                    percent = percent * 2;
+                    if (percent > 1) {
+                        percent = 1;
+                    }
+
                     var start = Page.height*4 - 420;
+                    var end = Page.height*4 - 600;
                     return transformStyle({
                         translateX: (Page.width - 290) / 2,
-                        translateY: start + percent * -700,
+                        translateY: Math.round(start + (end - start) * percent),
                         opacity: 1 - percent,
                     });
                 }
@@ -111,6 +120,11 @@ var searchCtrl = {
     }
 };
 
+function navEnterClicker() {
+    var nav = this.parentNode;
+    nav.className = nav.className === 'nav-active' ? '' : 'nav-active';
+}
+document.getElementById('nav').onclick = navEnterClicker;
 
 var scrollCtrl = {
     items: [],
@@ -119,9 +133,7 @@ var scrollCtrl = {
     enterListeners: {},
 
     init: function () {
-        window.onscroll = function () {
-            scrollCtrl.refreshView()
-        };
+        
     },
 
     add: function (item) {
@@ -133,6 +145,9 @@ var scrollCtrl = {
         var pageIndex = Math.floor(scrollTop / Page.height);
         var pageOffset = scrollTop - Page.height * pageIndex;
         var pageOffsetPercent = pageOffset / Page.height;
+
+        this.realIndex = pageIndex;
+        this.realOffset = pageOffsetPercent;
 
         if (isInit) {
             var index = pageIndex;
@@ -485,5 +500,17 @@ setTimeout(function () {
     }
     iphoneCtrl.el.style.opacity = 1;
     scrollCtrl.refreshView(true);
+
+    window.onresize = resizeHandler;
+    window.onscroll = scrollHandler;
 }, 0);
+
+function resizeHandler() {
+    calcPageSize();
+    document.body.scrollTop = (scrollCtrl.realIndex + scrollCtrl.realOffset) * Page.height;
+}
+
+function scrollHandler() {
+    scrollCtrl.refreshView()
+}
 
