@@ -137,6 +137,31 @@ nav {
     border: 0;
 }
 
+#way-point {
+    position: fixed;
+    right: 30px;
+    list-style: none;
+    z-index: 99;
+}
+
+#way-point li {
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    background: #4d4d4d;
+    margin: 8px 0;
+    cursor: pointer;
+}
+
+#way-point li:hover {
+    background: #A8DBF8;
+}
+
+#way-point .way-point-active {
+    background: #A8DBF8;
+    transform: scale(1.5, 1.5);
+}
+
 .page {
     height: 100%;
     min-height: 640px;
@@ -276,7 +301,7 @@ nav {
     width: 270px;
     height: 460px;
     margin: 66px 10px 0;
-    overflow: scroll;
+    overflow: hidden;
     position: relative;
 }
 

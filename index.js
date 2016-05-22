@@ -131,9 +131,62 @@ var scrollCtrl = {
     index: 0,
     leaveListeners: {},
     enterListeners: {},
+    realIndex: 0,
+    realOffset: 0,
 
     init: function () {
-        
+        var docHeight = document.body.scrollHeight;
+        var pages = Math.round(docHeight / Page.height);
+
+        var ol = document.createElement('ol');
+        ol.id = 'way-point';
+
+        for (var i = 0; i < pages; i++) {
+            var li = document.createElement('li');
+            li.id = 'way-point-' + i;
+            li.onclick = scrollCtrl.gotoIndexByWaypoint;
+            ol.appendChild(li);
+        }
+
+        document.body.appendChild(ol);
+    },
+
+    gotoIndexByWaypoint: function (e) {
+        var el = e.target || e.srcElement;
+
+        if (el.className === 'way-point-active') {
+            return;
+        }
+
+        var index = +el.id.slice(el.id.lastIndexOf('-') + 1);
+        scrollCtrl.gotoIndex(index);
+    },
+
+    gotoIndex: function (index) {
+        var from = document.body.scrollTop;
+        var to = index * Page.height;
+        animation(function (percent) {
+            percent = Math.sqrt(percent);
+            document.body.scrollTop = from + (to - from) * percent;
+        });
+    },
+
+    updateWaypoint: function () {
+        var me = scrollCtrl;
+        if (me.activeWaypoint === me.index) {
+            return;
+        }
+
+        var ol = document.getElementById('way-point');
+        ol.style.top = (document.body.clientHeight - ol.offsetHeight) / 2 + 'px';
+
+        if (me.activeWaypoint != null) {
+            var el = document.getElementById('way-point-' + me.activeWaypoint);
+            el.className = '';
+        }
+
+        document.getElementById('way-point-' + me.index).className = 'way-point-active';
+        me.activeWaypoint = me.realIndex;
     },
 
     add: function (item) {
@@ -181,6 +234,8 @@ var scrollCtrl = {
                 setStyles(item.el, styles);
             }
         }
+
+        this.updateWaypoint();
     },
 
     whenLeave: function (index, fn) {
@@ -511,6 +566,6 @@ function resizeHandler() {
 }
 
 function scrollHandler() {
-    scrollCtrl.refreshView()
+    scrollCtrl.refreshView();
 }
 
