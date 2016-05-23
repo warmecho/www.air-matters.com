@@ -516,6 +516,29 @@ scrollCtrl.add({
     }
 });
 
+scrollCtrl.add({
+    el: document.getElementById('partner-main'),
+    fn: {
+        3: function (percent) {
+            return transformStyle({
+                translateY: 200 - percent * 200,
+                opacity: percent,
+            });
+        }
+    }
+});
+
+scrollCtrl.add({
+    el: document.getElementById('partner-title'),
+    fn: {
+        3: function (percent) {
+            return transformStyle({
+                translateY: -200 - percent * -200,
+                opacity: percent,
+            });
+        }
+    }
+});
 
 
 function setStyles(el, styles) {
